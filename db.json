@@ -1,0 +1,19 @@
+{
+	"todos": [
+		{
+			"id": "7707",
+			"body": "Optimistic UI",
+			"completed": false
+		},
+		{
+			"id": "ca0d",
+			"body": "Next.js and React.js",
+			"completed": true
+		},
+		{
+			"id": "0168",
+			"body": "False User Experience",
+			"completed": false
+		}
+	]
+}
