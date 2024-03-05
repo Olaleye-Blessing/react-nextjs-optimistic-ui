@@ -7,6 +7,8 @@ export const createTodo = async (todo: Omit<ITodo, 'id'>) => {
 	await sleep(2000);
 
 	try {
+		throw new Error('Testing...');
+		
 		const req = await fetch('http://localhost:3004/todos', {
 			body: JSON.stringify(todo),
 			method: 'POST',

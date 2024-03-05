@@ -5,9 +5,14 @@ import { createTodo } from '../actions';
 interface IAddTodo {
 	addNewTodo: (todo: ITodo) => void;
 	updateTodo: (oldTodo: ITodo, newTodo: ITodo) => void;
+	removeTodo: (todo: ITodo) => void;
 }
 
-export default function AddTodo({ addNewTodo, updateTodo }: IAddTodo) {
+export default function AddTodo({
+	addNewTodo,
+	updateTodo,
+	removeTodo,
+}: IAddTodo) {
 	const add: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 		const form = e.currentTarget;
@@ -32,7 +37,7 @@ export default function AddTodo({ addNewTodo, updateTodo }: IAddTodo) {
 			updateTodo(optimisticTodo, dbTodo);
 			form.reset();
 		} catch (error) {
-			console.log('__ ERROR ___');
+			removeTodo(optimisticTodo);
 		}
 	};
 

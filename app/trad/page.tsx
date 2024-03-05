@@ -13,6 +13,10 @@ export default function Home() {
 		setTodos((prev) => [todo, ...prev]);
 	};
 
+	const removeTodo = (todo: ITodo) => {
+		setTodos((prev) => prev.filter((t) => t.id !== todo.id));
+	};
+
 	const updateTodo = (oldTodo: ITodo, newTodo: ITodo) => {
 		setTodos((prev) =>
 			prev.map((todo) => (todo.id === oldTodo.id ? newTodo : todo))
@@ -34,7 +38,11 @@ export default function Home() {
 			</header>
 
 			<main>
-				<Form addNewTodo={addNewTodo} updateTodo={updateTodo} />
+				<Form
+					addNewTodo={addNewTodo}
+					updateTodo={updateTodo}
+					removeTodo={removeTodo}
+				/>
 				<Todos todos={todos} />
 			</main>
 		</div>
