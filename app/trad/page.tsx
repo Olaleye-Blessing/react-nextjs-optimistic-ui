@@ -9,6 +9,16 @@ import Todos from './_components/todos';
 export default function Home() {
 	const [todos, setTodos] = useState<ITodo[]>([]);
 
+	const addNewTodo = (todo: ITodo) => {
+		setTodos((prev) => [todo, ...prev]);
+	};
+
+	const updateTodo = (oldTodo: ITodo, newTodo: ITodo) => {
+		setTodos((prev) =>
+			prev.map((todo) => (todo.id === oldTodo.id ? newTodo : todo))
+		);
+	};
+
 	useEffect(() => {
 		(async () => {
 			let _todos = await getTodos();
@@ -24,7 +34,7 @@ export default function Home() {
 			</header>
 
 			<main>
-				<Form />
+				<Form addNewTodo={addNewTodo} updateTodo={updateTodo} />
 				<Todos todos={todos} />
 			</main>
 		</div>

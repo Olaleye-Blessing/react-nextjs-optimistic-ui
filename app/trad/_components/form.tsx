@@ -1,10 +1,39 @@
+import { ITodo } from '@/interfaces/todo';
 import { FormEventHandler } from 'react';
+import { createTodo } from '../actions';
 
-interface IAddTodo {}
+interface IAddTodo {
+	addNewTodo: (todo: ITodo) => void;
+	updateTodo: (oldTodo: ITodo, newTodo: ITodo) => void;
+}
 
-export default function AddTodo({}: IAddTodo) {
+export default function AddTodo({ addNewTodo, updateTodo }: IAddTodo) {
 	const add: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
+		const form = e.currentTarget;
+		const body = new FormData(form).get('todo') as string;
+
+		const id = new Date().getTime();
+
+		const todo = {
+			body,
+			completed: false,
+		};
+
+		const optimisticTodo = {
+			...todo,
+			id,
+		};
+
+		addNewTodo(optimisticTodo);
+
+		try {
+			let dbTodo = await createTodo(todo);
+			updateTodo(optimisticTodo, dbTodo);
+			form.reset();
+		} catch (error) {
+			console.log('__ ERROR ___');
+		}
 	};
 
 	return (
